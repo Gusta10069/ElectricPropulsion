@@ -1,0 +1,28 @@
+// Gustavo D. de Mattos, student @ Federal University of Santa Catarina, 07/2025
+//Code for measuring internal resistance of 18650 cell.
+// This for the Arduino Uno R4, using ACS758 for current reading, common thing you might have to change is sensitivity and Vcc. Also if using another microcontroller ADC, you might have to divide not by 1023.
+const int sensorPin = A0;       // Analog pin connected to ACS758 output
+const float Vcc = 5.0;          // Supply voltage to ACS758
+const float sensitivity = 0.020; // Sensitivity in V/A, this changes somewhat depending on version, might be 0.02 or 0.04 usually)
+const float offset = Vcc / 2;   // Assuming sensor is centered at Vcc/2 (2.5V at 0A)
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int adcValue = analogRead(sensorPin);
+  float voltage = (adcValue / 1023.0) * Vcc;
+  float current = (voltage - offset) / sensitivity;
+
+  Serial.print("ADC: ");
+  Serial.print(adcValue);
+  Serial.print(" | Voltage: ");
+  Serial.print(voltage, 3);
+  Serial.print(" V | Current: ");
+  Serial.print(current, 3);
+  Serial.println(" A");
+
+  delay(500); // Sample every 500ms
+}
+//yet to finish...
