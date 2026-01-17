@@ -161,15 +161,9 @@ controls.addEventListener("unlock", () => {
   resetControls();
 });
 
-const requestPointerLock = () => {
-  if (!controls.isLocked) {
-    controls.lock();
-  }
-};
-
-startButton.addEventListener("click", requestPointerLock);
-blocker.addEventListener("click", requestPointerLock);
-canvas.addEventListener("click", requestPointerLock);
+startButton.addEventListener("click", () => {
+  controls.lock();
+});
 
 let previousTime = performance.now();
 
